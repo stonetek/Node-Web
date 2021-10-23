@@ -1,9 +1,9 @@
 
-import { api } from '../../services/api';
-import styles from './styles.module.scss';
-import logoimg from '../../assets/logo.svg';
 import { useEffect, useState } from 'react';
 import io from 'socket.io-client';
+import logoimg from '../../assets/logo.svg';
+import { api } from '../../services/api';
+import styles from './styles.module.scss';
 
 type Message = {
     id: string;
@@ -36,7 +36,7 @@ export function MessageList() {
 
                 messagesQueue.shift()
             }
-        })
+        }, 3000)
     }, [])
 
     useEffect(() => {

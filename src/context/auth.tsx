@@ -33,7 +33,6 @@ type AuthResponse = {
 }
 
 export function AuthProvider(props: AuthProvider) {
-
     const [user, setUser] = useState<User | null>(null)
 
     const signInUrl = `https://github.com/login/oauth/authorize?scope=user&client_id=17bea08fdfe1a6cf3868`;
@@ -44,15 +43,17 @@ export function AuthProvider(props: AuthProvider) {
         })
 
         const { token, user } = response.data;
+
         localStorage.setItem('@dowhile:token', token);
+
+        api.defaults.headers.common.authorization = 'Bearer ${token}';
+
         setUser(user)
     }
 
     function signOut() {
         setUser(null)
         localStorage.removeItem('@dowhile:token')
-
-        api.defaults.headers.common.authorization = 'Bearer ${token}';
     }
 
     useEffect(() => {

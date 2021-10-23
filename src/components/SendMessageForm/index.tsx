@@ -4,32 +4,29 @@ import { AuthContext } from '../../context/auth';
 import { api } from '../../services/api';
 import styles from './styles.module.scss';
 
-
-
 export function SendMessageForm() {
-    const { user } = useContext(AuthContext)
+    const { user, signOut } = useContext(AuthContext)
     const [message, setMessage] = useState('');
 
-    async function handleSendMessage(event: FormEvent) {
+    async function handlesendMessage(event: FormEvent) {
         event.preventDefault();
 
         if (!message.trim()) {
             return;
         }
 
-        await api.post('message', { message })
+        await api.post('messages', { message })
 
         setMessage('');
-
     }
 
     return (
         <div className={styles.sendMessageFormWrapper}>
-            <button className={styles.signOutButton} >
+            <button onClick={signOut} className={styles.signOutButton} >
                 <VscSignOut size="32" />
             </button>
 
-            <header className={styles.useInformation} >
+            <header className={styles.userInformation} >
                 <div className={styles.userImage} >
                     <img src={user?.avatar_url} alt={user?.name} />
                 </div>
@@ -40,7 +37,7 @@ export function SendMessageForm() {
                 </span>
             </header>
 
-            <form onSubmit={handleSendMessage} className={styles.SendMessageForm}>
+            <form onSubmit={handlesendMessage} className={styles.sendMessageForm}>
                 <label htmlFor="message">Mensagem </label>
 
                 <textarea
