@@ -51,6 +51,8 @@ export function AuthProvider(props: AuthProvider) {
     function signOut() {
         setUser(null)
         localStorage.removeItem('@dowhile:token')
+
+        api.defaults.headers.common.authorization = 'Bearer ${token}';
     }
 
     useEffect(() => {
